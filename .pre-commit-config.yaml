@@ -1,0 +1,22 @@
+# setup: 
+# - pip install pre-commit
+# - pre-commit install
+# then it should all be set up
+repos:
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        args: ["--preview"]
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.0.254"
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
