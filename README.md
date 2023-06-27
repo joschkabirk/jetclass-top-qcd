@@ -61,6 +61,9 @@ prediction.
 | `aux_genpart_pt` | |
 | `aux_truth_match` | |
 
+**To see the full comparison of variables between the original JetClass dataset
+and the filtered dataset, click on the arrow below.**
+
 <details>
   <summary>Overview / variable comparison to original JetClass dataset</summary>
 
