@@ -64,7 +64,7 @@ prediction.
 **To see the full comparison of variables between the original JetClass dataset
 and the filtered dataset, click on the arrow below.**
 
-<details>
+<details open>
   <summary>Overview / variable comparison to original JetClass dataset</summary>
 
 | Variable name | ✅  Included / ❌ Removed / 🆕 added |
