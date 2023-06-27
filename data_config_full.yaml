@@ -91,5 +91,10 @@ observers:
    - jet_tau2
    - jet_tau3
    - jet_tau4
+   - aux_genpart_eta
+   - aux_genpart_phi
+   - aux_genpart_pid
+   - aux_genpart_pt
+   - aux_truth_match
 
 weights:
