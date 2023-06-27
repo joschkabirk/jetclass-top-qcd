@@ -103,10 +103,12 @@ prediction.
 | `aux_truth_match` | Included |
 </details>
     
-## Run the code
+## Run the code (on the DESY Maxwell cluster)
 The code can be executed within this repo by running the following singularity command:
 ```bash
 singularity exec --nv -B /home -B /beegfs /beegfs/desy/user/birkjosc/singularity_images/pytorch-image-v0.0.8.img \
     bash -c "source /opt/conda/bin/activate && python prepare_dataset.py"
 ```
-There is also a job script which can be used ([`job_scripts/maxwell_job.sh`](https://github.com/joschkabirk/jetclass-qcd-top/blob/main/job_scripts/maxwell_job.sh)).
+If you don't have access to the DESY Maxwell cluster, you can also run the code
+somewhere else of course, but you'll have to build the singularity image yourself.
+The image is located on DockerHub at `jobirk/pytorch-image:v0.0.8`.
