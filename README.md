@@ -4,7 +4,7 @@ This repo contains the code to filter the
 [JetClass dataset](https://github.com/jet-universe/particle_transformer) 
 for QCD/top jets and add the ParT predictions.
     
-The code is not refined yet, but get's the job done for now.
+The code is not refined yet, but gets the job done for now.
 
 The resulting datasets are stored on [DESY Sync&Share](https://syncandshare.desy.de/index.php/s/Fx9W8Q4bgmN7HpQ).
 Each dataset contains approximately the same number of (hadronic) top-jets
@@ -104,11 +104,15 @@ prediction.
 </details>
     
 ## Run the code (on the DESY Maxwell cluster)
-The code can be executed within this repo by running the following singularity command:
+You'll have to make sure that you have the JetClass dataset stored on your
+machine and adapt the paths in `prepare_dataset.py` accordingly.
+
+The code can then be executed within this repo by running the following
+singularity command:
 ```bash
 singularity exec --nv -B /home -B /beegfs /beegfs/desy/user/birkjosc/singularity_images/pytorch-image-v0.0.8.img \
     bash -c "source /opt/conda/bin/activate && python prepare_dataset.py"
 ```
 If you don't have access to the DESY Maxwell cluster, you can also run the code
-somewhere else of course, but you'll have to build the singularity image yourself.
-The image is located on DockerHub at `jobirk/pytorch-image:v0.0.8`.
+somewhere else of course, but you'll have to build the singularity image
+yourself. The image is located on DockerHub at `jobirk/pytorch-image:v0.0.8`.
