@@ -15,8 +15,23 @@ from model.part import ParticleTransformerWrapper, part_default_kwargs
 # NOTE: if you want to run this script, you have to adjust the parameters below
 # TODO: make the parameters below command-line arguments
 DEVELOPMENT_MODE = True  # if True, only a small subset of the data is used
-PART_MODEL_PATH = "/home/birkjosc/repositories/particle_transformer/models/ParT_kin.pt"  # noqa: E501, fmt: off
-DATA_CONFIG_JETCLASS = "data_config_kin.yaml"
+DATA_CONFIG_JETCLASS = "data_config_full.yaml"
+models_to_evaluate = {
+    "ParT_full": {
+        "model_path": (  # noqa: E501, fmt: off
+            "/home/birkjosc/repositories/particle_transformer/models/ParT_full.pt"
+        ),
+        "input_dim": 17,
+        "pf_features_indices": list(range(17)),  # use all features
+    },
+    "ParT_kin": {
+        "model_path": (  # noqa: E501, fmt: off
+            "/home/birkjosc/repositories/particle_transformer/models/ParT_kin.pt"
+        ),
+        "input_dim": 7,
+        "pf_features_indices": [0, 1, 2, 3, 4, 15, 16],  # exclude the pid stuff
+    },
+}
 JETCLASS_PATH = "/beegfs/desy/user/birkjosc/datasets/jetclass/JetClass"
 PROCESSES = [
     # "HToBB",
@@ -41,7 +56,7 @@ TRAIN_VAL_TEST_CONFIG = {
     },
     "test": {
         "folder": "test_20M",
-        "n_filtered": 1_000_000 if not DEVELOPMENT_MODE else 5_000,
+        "n_filtered": 2_000_000 if not DEVELOPMENT_MODE else 40_000,
     },
 }
 file_dict_jetclass = {
@@ -78,7 +93,7 @@ VAR_NAMES_TO_SAVE = [
 
 def create_dataset_with_model_predictions(
     dataloader,
-    model,
+    models,
     input_names,
     output_file,
     n_stop=None,
@@ -92,8 +107,11 @@ def create_dataset_with_model_predictions(
     ----------
     dataloader : torch.utils.data.DataLoader
         DataLoader that yields batches of data.
-    model : torch.nn.Module
-        Model that is used to make predictions.
+    models : dict
+        Dict of models for which the predictions are calculated. The keys are
+        the names of the models, the values are again dicts which contain the
+        model path, the model itself (torch.nn.Module), input dimension and the
+        indices of the particle features that are used as input.
     input_names : list of str
         Names of the inputs that are passed to the model.
     output_file : str
@@ -105,10 +123,13 @@ def create_dataset_with_model_predictions(
         Names of the observer variables that are saved in the output file.
     """
     var_names_to_save = [] if var_names_to_save is None else var_names_to_save
-    data_dict = {
-        "jet_p_top_kin": [],
-        "label_top": [],
-    } | {var_name: [] for var_name in var_names_to_save}
+    data_dict = (
+        {f"jet_p_top_{model_name}": [] for model_name in models.keys()}
+        | {
+            "label_top": [],
+        }
+        | {var_name: [] for var_name in var_names_to_save}
+    )
 
     if n_stop is not None:
         n_batches = n_stop // dataloader.batch_size
@@ -122,19 +143,28 @@ def create_dataset_with_model_predictions(
                     break
             inputs = [X[k].to("cuda") for k in input_names]
             label = y["_label_"].long()
-            model_output = model(*inputs)
-            # rescale the top quark prediction from ParT
-            # we want p_Tbqq and p_QCD to add up to 1
-            # --> p_top = p_Tbqq / (p_Tbqq + p_QCD)
-            #     p_QCD = p_QCD  / (p_Tbqq + p_QCD)
-            # --> p_top + p_QCD = 1
-            p_top = model_output[:, index_top] / (
-                model_output[:, index_top] + model_output[:, index_qcd]
-            )
-            data_dict["jet_p_top_kin"].append(p_top.detach().cpu().numpy())
             data_dict["label_top"].append(label.detach().cpu().numpy() / index_top)
             for var_name in var_names_to_save:
                 data_dict[var_name].append(observers[var_name].detach().cpu().numpy())
+            # calculate model predictions
+            for model_name, d in models.items():
+                model_output = d["model"](
+                    inputs[0],
+                    inputs[1][:, d["pf_features_indices"]],
+                    inputs[2],
+                    inputs[3],
+                )
+                # rescale the top quark prediction from ParT
+                # we want p_Tbqq and p_QCD to add up to 1
+                # --> p_top = p_Tbqq / (p_Tbqq + p_QCD)
+                #     p_QCD = p_QCD  / (p_Tbqq + p_QCD)
+                # --> p_top + p_QCD = 1
+                p_SvsB = model_output[:, index_top] / (
+                    model_output[:, index_top] + model_output[:, index_qcd]
+                )
+                data_dict[f"jet_p_top_{model_name}"].append(
+                    p_SvsB.detach().cpu().numpy()
+                )
 
     for key in data_dict:
         data_dict[key] = np.concatenate(data_dict[key])
@@ -146,30 +176,33 @@ def create_dataset_with_model_predictions(
 
 def main():
     """Main function."""
-    
+
     if DEVELOPMENT_MODE:
         print("Running in development mode. Only using small number of jets.")
         os.makedirs("./output_dev", exist_ok=True)
-    
-    # ----- Load pre-trained ParT model -----
-    # Load the checkpoint from the pre-trained ParT model
-    ckpt_pretrained = torch.load(PART_MODEL_PATH, map_location="cuda")
-    # Use the model configuration from
-    # https://github.com/jet-universe/particle_transformer/blob/main/networks/example_ParticleTransformer.py#L26-L44  # noqa: E501
-    cfg = part_default_kwargs
-    part_model_pretrained = ParticleTransformerWrapper(**cfg)
-    part_model_pretrained.load_state_dict(ckpt_pretrained)
-    # Important: set the model to eval mode, otherwise the dropout layers will be
-    # active and the model will perform worse
-    part_model_pretrained.mod.for_inference = True
-    part_model_pretrained.eval()
-    input_names_kin = ["pf_points", "pf_features", "pf_vectors", "pf_mask"]
-    part_model_pretrained.to("cuda")
 
-    print(f"Loaded pre-trained ParT model from {PART_MODEL_PATH}")
+    # ----- Load pre-trained ParT models -----
+    for model_name, model_cfg in models_to_evaluate.items():
+        # Load the checkpoint from the pre-trained ParT model
+        ckpt_pretrained = torch.load(model_cfg["model_path"], map_location="cuda")
+        # Use the model configuration from
+        # https://github.com/jet-universe/particle_transformer/blob/main/networks/example_ParticleTransformer.py#L26-L44  # noqa: E501
+        model_kwargs = part_default_kwargs
+        model_kwargs["input_dim"] = model_cfg["input_dim"]
+        part_model_pretrained = ParticleTransformerWrapper(**model_kwargs)
+        part_model_pretrained.load_state_dict(ckpt_pretrained)
+        # Important: set the model to eval mode, otherwise the dropout layers will be
+        # active and the model will perform worse
+        part_model_pretrained.mod.for_inference = True
+        part_model_pretrained.eval()
+        part_model_pretrained.to("cuda")
+        models_to_evaluate[model_name]["model"] = part_model_pretrained
+        print(f"Loaded pre-trained ParT model from {model_cfg['model_path']}")
+
+    input_names = ["pf_points", "pf_features", "pf_vectors", "pf_mask"]
 
     # Loop over train/val/test
-    for ds_id in ["train", "val", "test"]:
+    for ds_id in TRAIN_VAL_TEST_CONFIG:
         print(f"Processing {ds_id} dataset")
         # ----- Load JetClass data -----
 
@@ -193,8 +226,8 @@ def main():
         # ----- Create dataset with model predictions -----
         create_dataset_with_model_predictions(
             dataloader,
-            model=part_model_pretrained,
-            input_names=input_names_kin,
+            models=models_to_evaluate,
+            input_names=input_names,
             n_stop=TRAIN_VAL_TEST_CONFIG[ds_id]["n_filtered"],
             output_file=f"{output_folder}/filtered_jetclass_{ds_id}.h5",
             var_names_to_save=VAR_NAMES_TO_SAVE,
