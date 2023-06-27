@@ -16,7 +16,15 @@ and QCD jets.
 | `filtered_jetclass_val.h5` | 1M |
 | `filtered_jetclass_test.h5` | 1M |
 
-## Reading the files
+## Downloading and reading the files
+
+You can either download the files via the web interface or via the command line.
+In the command line you can use
+```bash
+wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_train.h5
+wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_val.h5
+wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_test.h5
+```
 After [downloading the files](https://syncandshare.desy.de/index.php/s/Fx9W8Q4bgmN7HpQ), 
 you can simply load the files using e.g. `pandas` or `h5py`.
 The code snippet below assumes you are in the directory where the files are located.
