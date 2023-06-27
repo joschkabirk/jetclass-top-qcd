@@ -67,51 +67,51 @@ and the filtered dataset, click on the arrow below.**
 <details>
   <summary>Overview / variable comparison to original JetClass dataset</summary>
 
-| Variable name | Included / removed / added |
+| Variable name | ✅  Included / ❌ Removed / 🆕 added |
 | --- | --- |
-| `label_top` | Added |
-| `jet_p_top_kin` | Added |
-| `part_px` | Removed |
-| `part_py` | Removed |
-| `part_pz` | Removed |
-| `part_energy` | Removed |
-| `part_deta` | Removed |
-| `part_dphi` | Removed |
-| `part_d0val` | Removed |
-| `part_d0err` | Removed |
-| `part_dzval` | Removed |
-| `part_dzerr` | Removed |
-| `part_charge` | Removed |
-| `part_isChargedHadron` | Removed |
-| `part_isNeutralHadron` | Removed |
-| `part_isPhoton` | Removed |
-| `part_isElectron` | Removed |
-| `part_isMuon` | Removed |
-| `label_QCD` | Removed |
-| `label_Hbb` | Removed |
-| `label_Hcc` | Removed |
-| `label_Hgg` | Removed |
-| `label_H4q` | Removed |
-| `label_Hqql` | Removed |
-| `label_Zqq` | Removed |
-| `label_Wqq` | Removed |
-| `label_Tbqq` | Removed |
-| `label_Tbl` | Removed |
-| `jet_pt` | Included |
-| `jet_eta` | Included |
-| `jet_phi` | Included |
-| `jet_energy` | Included |
-| `jet_nparticles` | Included |
-| `jet_sdmass` | Included |
-| `jet_tau1` | Included |
-| `jet_tau2` | Included |
-| `jet_tau3` | Included |
-| `jet_tau4` | Included |
-| `aux_genpart_eta` | Included |
-| `aux_genpart_phi` | Included |
-| `aux_genpart_pid` | Included |
-| `aux_genpart_pt` | Included |
-| `aux_truth_match` | Included |
+| `label_top` | 🆕 Added |
+| `jet_p_top_kin` | 🆕 Added |
+| `part_px` | ❌ Removed |
+| `part_py` | ❌ Removed |
+| `part_pz` | ❌ Removed |
+| `part_energy` | ❌ Removed |
+| `part_deta` | ❌ Removed |
+| `part_dphi` | ❌ Removed |
+| `part_d0val` | ❌ Removed |
+| `part_d0err` | ❌ Removed |
+| `part_dzval` | ❌ Removed |
+| `part_dzerr` | ❌ Removed |
+| `part_charge` | ❌ Removed |
+| `part_isChargedHadron` | ❌ Removed |
+| `part_isNeutralHadron` | ❌ Removed |
+| `part_isPhoton` | ❌ Removed |
+| `part_isElectron` | ❌ Removed |
+| `part_isMuon` | ❌ Removed |
+| `label_QCD` | ❌ Removed |
+| `label_Hbb` | ❌ Removed |
+| `label_Hcc` | ❌ Removed |
+| `label_Hgg` | ❌ Removed |
+| `label_H4q` | ❌ Removed |
+| `label_Hqql` | ❌ Removed |
+| `label_Zqq` | ❌ Removed |
+| `label_Wqq` | ❌ Removed |
+| `label_Tbqq` | ❌ Removed |
+| `label_Tbl` | ❌ Removed |
+| `jet_pt` | ✅ Included |
+| `jet_eta` | ✅  Included |
+| `jet_phi` | ✅  Included |
+| `jet_energy` | ✅  Included |
+| `jet_nparticles` | ✅  Included |
+| `jet_sdmass` | ✅  Included |
+| `jet_tau1` | ✅  Included |
+| `jet_tau2` | ✅  Included |
+| `jet_tau3` | ✅  Included |
+| `jet_tau4` | ✅  Included |
+| `aux_genpart_eta` | ✅  Included |
+| `aux_genpart_phi` | ✅  Included |
+| `aux_genpart_pid` | ✅  Included |
+| `aux_genpart_pt` | ✅  Included |
+| `aux_truth_match` | ✅  Included |
 </details>
     
 ## Run the code (on the DESY Maxwell cluster)
