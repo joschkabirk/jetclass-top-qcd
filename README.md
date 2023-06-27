@@ -13,7 +13,7 @@ and QCD jets.
 | Filename | Number of jets |
 | --- | --- |
 | `filtered_jetclass_train.h5` | 4M |
-| `filtered_jetclass_val.h5` | 2M |
+| `filtered_jetclass_val.h5` | 1M |
 | `filtered_jetclass_test.h5` | 1M |
 
 ## Reading the files
