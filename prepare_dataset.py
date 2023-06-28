@@ -46,10 +46,6 @@ PROCESSES = [
     # "ZToQQ",
 ]
 TRAIN_VAL_TEST_CONFIG = {
-    "test": {
-        "folder": "test_20M",
-        "n_filtered": 4_000_000 if not DEVELOPMENT_MODE else 2_000_000,
-    },
     "train": {
         "folder": "train_100M",
         "n_filtered": 4_000_000 if not DEVELOPMENT_MODE else 20_000,
@@ -57,6 +53,10 @@ TRAIN_VAL_TEST_CONFIG = {
     "val": {
         "folder": "val_5M",
         "n_filtered": 1_000_000 if not DEVELOPMENT_MODE else 10_000,
+    },
+    "test": {
+        "folder": "test_20M",
+        "n_filtered": 4_000_000 if not DEVELOPMENT_MODE else 20_000,
     },
 }
 file_dict_jetclass = {
