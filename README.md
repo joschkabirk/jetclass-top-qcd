@@ -6,7 +6,7 @@ for QCD/top jets and add the ParT predictions.
     
 The code is not refined yet, but gets the job done for now.
 
-The resulting datasets are stored on [DESY Sync&Share](https://syncandshare.desy.de/index.php/s/Fx9W8Q4bgmN7HpQ).
+The resulting datasets are stored on [DESY Sync&Share](https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o).
 Each dataset contains approximately the same number of (hadronic) top-jets
 and QCD jets.
 
@@ -18,14 +18,14 @@ and QCD jets.
 
 ## Downloading and reading the files
 
-You can either download the files via the web interface or via the command line.
+You can either download the files via the web interface [here](https://syncandshare.desy.de/index.php/apps/files/?dir=/jetclass_top_qcd_ParT_full&fileid=561387091)
 In the command line you can use
 ```bash
-wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_train.h5
-wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_val.h5
-wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_test.h5
+wget https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o/download/filtered_jetclass_train.h5
+wget https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o/download/filtered_jetclass_val.h5
+wget https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o/download/filtered_jetclass_test.h5
 ```
-After [downloading the files](https://syncandshare.desy.de/index.php/s/Fx9W8Q4bgmN7HpQ), 
+After [downloading the files](https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o), 
 you can simply load the files using e.g. `pandas` or `h5py`.
 The code snippet below assumes you are in the directory where the files are located.
 
