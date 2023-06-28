@@ -18,7 +18,7 @@ and QCD jets.
 
 ## Downloading and reading the files
 
-You can either download the files via the web interface [here](https://syncandshare.desy.de/index.php/apps/files/?dir=/jetclass_top_qcd_ParT_full&fileid=561387091)
+You can either download the files via the web interface [here](https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o)
 In the command line you can use
 ```bash
 wget https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o/download/filtered_jetclass_train.h5
