@@ -6,26 +6,21 @@ for QCD/top jets and add the ParT predictions.
     
 The code is not refined yet, but gets the job done for now.
 
-The resulting datasets are stored on [DESY Sync&Share](https://syncandshare.desy.de/index.php/s/Fx9W8Q4bgmN7HpQ).
+The resulting datasets are stored on [DESY Sync&Share](https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o).
 Each dataset contains approximately the same number of (hadronic) top-jets
 and QCD jets.
 
 | Filename | Number of jets |
 | --- | --- |
-| `filtered_jetclass_train.h5` | 4M |
-| `filtered_jetclass_val.h5` | 1M |
-| `filtered_jetclass_test.h5` | 1M |
+| `filtered_jetclass_train.h5` | 4M (2M/class)|
+| `filtered_jetclass_val.h5` | 1M (500k/class) |
+| `filtered_jetclass_test.h5` | 2M (1M/class) |
 
 ## Downloading and reading the files
 
-You can either download the files via the web interface or via the command line.
-In the command line you can use
-```bash
-wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_train.h5
-wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_val.h5
-wget https://syncandshare.desy.de/index.php/s/AXYmk4NwrLdJQgR/download/filtered_jetclass_test.h5
-```
-After [downloading the files](https://syncandshare.desy.de/index.php/s/Fx9W8Q4bgmN7HpQ), 
+You can download the files via the web interface [here](https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o).
+
+After [downloading the files](https://syncandshare.desy.de/index.php/s/5M56tM5KYAjq95o), 
 you can simply load the files using e.g. `pandas` or `h5py`.
 The code snippet below assumes you are in the directory where the files are located.
 
@@ -43,7 +38,8 @@ prediction.
 
 | Variable name | Description |
 | --- | --- |
-| `jet_p_top_kin = p_Tbqq / (p_Tbqq + p_QCD)` | Rescaled top quark probability of [ParT-kin](https://github.com/jet-universe/particle_transformer/blob/main/data/JetClass/JetClass_kin.yaml) |
+| `jet_p_top_ParT_kin = p_Tbqq / (p_Tbqq + p_QCD)` | Rescaled top quark probability of [ParT-kin](https://github.com/jet-universe/particle_transformer/blob/main/data/JetClass/JetClass_kin.yaml) |
+| `jet_p_top_ParT_full = p_Tbqq / (p_Tbqq + p_QCD)` | Rescaled top quark probability of [ParT-full](https://github.com/jet-universe/particle_transformer/blob/main/data/JetClass/JetClass_full.yaml) |
 | `label_top` | `label_top=1` for top jets and `label_top=0` for QCD jets |
 | `jet_pt` | |
 | `jet_eta` | |
@@ -70,7 +66,8 @@ and the filtered dataset, click on the arrow below.**
 | Variable name | ✅  Included / ❌ Removed / 🆕 added |
 | --- | --- |
 | `label_top` | 🆕 Added |
-| `jet_p_top_kin` | 🆕 Added |
+| `jet_p_top_ParT_kin` | 🆕 Added |
+| `jet_p_top_ParT_full` | 🆕 Added |
 | `part_px` | ❌ Removed |
 | `part_py` | ❌ Removed |
 | `part_pz` | ❌ Removed |
