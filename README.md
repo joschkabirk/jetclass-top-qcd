@@ -43,7 +43,8 @@ prediction.
 
 | Variable name | Description |
 | --- | --- |
-| `jet_p_top_kin = p_Tbqq / (p_Tbqq + p_QCD)` | Rescaled top quark probability of [ParT-kin](https://github.com/jet-universe/particle_transformer/blob/main/data/JetClass/JetClass_kin.yaml) |
+| `jet_p_top_ParT_kin = p_Tbqq / (p_Tbqq + p_QCD)` | Rescaled top quark probability of [ParT-kin](https://github.com/jet-universe/particle_transformer/blob/main/data/JetClass/JetClass_kin.yaml) |
+| `jet_p_top_ParT_full = p_Tbqq / (p_Tbqq + p_QCD)` | Rescaled top quark probability of [ParT-full](https://github.com/jet-universe/particle_transformer/blob/main/data/JetClass/JetClass_full.yaml) |
 | `label_top` | `label_top=1` for top jets and `label_top=0` for QCD jets |
 | `jet_pt` | |
 | `jet_eta` | |
@@ -70,7 +71,8 @@ and the filtered dataset, click on the arrow below.**
 | Variable name | ✅  Included / ❌ Removed / 🆕 added |
 | --- | --- |
 | `label_top` | 🆕 Added |
-| `jet_p_top_kin` | 🆕 Added |
+| `jet_p_top_ParT_kin` | 🆕 Added |
+| `jet_p_top_ParT_full` | 🆕 Added |
 | `part_px` | ❌ Removed |
 | `part_py` | ❌ Removed |
 | `part_pz` | ❌ Removed |
