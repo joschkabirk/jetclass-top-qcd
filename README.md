@@ -14,7 +14,7 @@ and QCD jets.
 | --- | --- |
 | `filtered_jetclass_train.h5` | 4M (2M/class)|
 | `filtered_jetclass_val.h5` | 1M (500k/class) |
-| `filtered_jetclass_test.h5` | 2M (1M/class) |
+| `filtered_jetclass_test.h5` | 4M (2M/class) |
 
 ## Downloading and reading the files
 
